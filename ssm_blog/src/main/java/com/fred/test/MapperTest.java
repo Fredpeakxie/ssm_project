@@ -32,8 +32,11 @@ public class MapperTest {
 //        mapper.insertSelective(new User("谢宇峰","QweAsdZxc123","347667675@qq.com"));
 //        User user = mapper.selectUserByPrimaryKey(2L);
         List<User> users = mapper.selectUser();
-        User user = mapper.selectUserByPrimaryKey(1L);
-        System.out.println(user);
-        System.out.println(users);
+
+        System.out.println(mapper.selectUserByUsername("谢宇峰"));
+
+//        User user = mapper.selectUserByPrimaryKey(1L);
+//        System.out.println(user);
+//        System.out.println(users);
     }
 }

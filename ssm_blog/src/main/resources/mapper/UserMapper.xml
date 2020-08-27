@@ -20,6 +20,12 @@
         where user_id = #{userId,jdbcType=BIGINT}
     </select>
 
+    <select id="selectUserByUsername" parameterType="java.lang.String" resultType="java.lang.Long">
+        select count(*)
+        from t_user u
+        where u.username = #{username}
+    </select>
+
     <select id="selectUser" resultMap="userMap">
         select *
         from t_user

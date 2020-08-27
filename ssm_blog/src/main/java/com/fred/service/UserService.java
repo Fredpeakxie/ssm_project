@@ -29,4 +29,13 @@ public class UserService {
     public List<User> getAllUser(){
         return userMapper.selectUser();
     }
+
+    public boolean checkUsername(String username){
+        Long l = userMapper.selectUserByUsername(username);
+        if(l==0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
