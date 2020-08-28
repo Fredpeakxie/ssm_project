@@ -6,11 +6,17 @@ import com.fred.util.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.applet.resources.MsgAppletViewer_fr;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @auther fred
@@ -38,7 +44,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/userCheck")
     public Msg usernameCheck(@RequestParam("username") String username){
-        System.out.println("userCheck" + username);
         if(userService.checkUsername(username)){
             return Msg.success().setMsg("验证成功");
         }else {
@@ -46,10 +51,24 @@ public class UserController {
         }
     }
 
+    /**
+     * 用户注册表单的校验 jsr303
+     * 通过校验后发起注册
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/register")
-    public Msg userRegister(User user){
-        System.out.println("userRegister");
-        return Msg.success();
+    public Msg userRegister(@Valid User user, BindingResult result){
+        if(result.hasErrors()){
+            FieldError error = result.getFieldError();
+            return Msg.fail().setMsg("请停止提交非法表单,"+error.getDefaultMessage());
+        }else {
+            boolean register = userService.register(user);
+            if(!register){
+                return Msg.fail().setMsg("注册失败，很巧,用户名在注册时被抢用");
+            }
+            return Msg.success();
+        }
     }
 }

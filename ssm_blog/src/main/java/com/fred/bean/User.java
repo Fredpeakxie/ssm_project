@@ -1,13 +1,22 @@
 package com.fred.bean;
 
+import javax.validation.constraints.Pattern;
+
 /**
  * @auther fred
  * @create 2020-08-26 11:17
  */
 public class User {
     private Long userId;
+    @Pattern(regexp = "^[a-zA-z0-9_-]{6,16}$",
+            message = "用户名必须是6-16位英文和数组的组合")
     private String username;
+    @Pattern(regexp = "^[a-zA-z0-9_-]{6,16}$",
+            message = "密码必须是6-16位英文和数组的组合")
     private String password;
+
+    @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
+            ,message = "邮箱格式不正确")
     private String email;
 
     public User() {

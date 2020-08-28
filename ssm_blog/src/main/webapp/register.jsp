@@ -36,28 +36,28 @@
                 <form id="registerForm">
                     <div class="form-group">
                         <label for="usernameInput">Username</label>
-                        <div class="col-sm-10">
+                        <div class="col-md-12">
                             <input type="text" name="username" class="form-control" id="usernameInput" placeholder="username">
                             <span id="usernameCheck" class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="emailInput">email</label>
-                        <div class="col-sm-10">
+                        <label for="emailInput">Email</label>
+                        <div class="col-md-12">
                             <input type="text" name="email" class="form-control" id="emailInput" placeholder="email">
                             <span id="emailCheck" class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="passwordInput">Password</label>
-                        <div class="col-sm-10">
+                        <div class="col-md-12">
                             <input type="password" name="password" class="form-control" id="passwordInput" placeholder="password">
                             <span id="passwordCheck" class="help-block"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="passwordRInput">Password Repeat</label>
-                        <div class="col-sm-10">
+                        <div class="col-md-12">
                             <input type="password" class="form-control" id="passwordRInput" placeholder="repeat password">
                             <span id="passwordRCheck" class="help-block"></span>
                         </div>
@@ -181,15 +181,14 @@
             type:"POST",
             success:function (result) {
                 show_validate_msg("#usernameInput",result);
+                //将返回码递交给外部
                 resultCode = result.code;
             }
         });
 
-
         if (resultCode==200){
             return false;
         }
-        console.log($("#container form").serialize());
         //先发送ajax异步请求 根据结果进行跳转
         $.ajax({
             url:"${APP_PATH}/register",
@@ -197,9 +196,16 @@
             data:$("#container form").serialize(),
             success:function (result) {
                 console.log(result);
+                resultCode = result.code;
+                if(result.code==200){
+                    alert(result.msg);
+                }else {
+                    window.location.href="${APP_PATH}/login.jsp";
+                }
             }
         });
-        return false;
+
+
     })
 </script>
 </body>

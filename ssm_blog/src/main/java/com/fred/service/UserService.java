@@ -18,6 +18,10 @@ public class UserService {
     UserMapper userMapper;
 
     public boolean register(User user){
+        Long l = userMapper.selectUserByUsername(user.getUsername());
+        if(l != 0){
+            return false;
+        }
         int i = userMapper.insertSelective(user);
         if(i != 0){
             return true;
