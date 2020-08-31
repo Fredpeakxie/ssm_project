@@ -30,6 +30,19 @@ public class UserService {
         }
     }
 
+    public boolean login(User user){
+        Long l = userMapper.selectUserByLogin(user);
+        if(l == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public User loginWithUser(User user){
+        return userMapper.selectUserGetBack(user);
+    }
+
     public List<User> getAllUser(){
         return userMapper.selectUser();
     }

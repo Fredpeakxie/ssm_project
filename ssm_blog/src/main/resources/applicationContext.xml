@@ -46,7 +46,7 @@
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!--        控制著数据源-->
+        <!--        控制着数据源-->
         <property name="dataSource" ref="pooledDataSource"></property>
     </bean>
 

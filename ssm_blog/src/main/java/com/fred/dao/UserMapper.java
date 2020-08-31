@@ -19,4 +19,7 @@ public interface UserMapper {
 
     Long selectUserByUsername(@Param("username") String username);
 
+    Long selectUserByLogin(User user);
+
+    User selectUserGetBack(User user);
 }

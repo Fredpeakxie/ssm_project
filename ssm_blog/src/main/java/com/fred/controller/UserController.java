@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sun.applet.resources.MsgAppletViewer_fr;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +71,21 @@ public class UserController {
                 return Msg.fail().setMsg("注册失败，很巧,用户名在注册时被抢用");
             }
             return Msg.success();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/login")
+    public Msg userLogin(User user, HttpServletRequest request){
+//        boolean login = userService.login(user);
+        User back = userService.loginWithUser(user);
+        HttpSession session = request.getSession(true);
+        if(back != null){
+            session.setAttribute("isLogin",back);
+            return Msg.success();
+        }else {
+            session.setAttribute("isLogin","false");
+            return Msg.fail().setMsg("用户名或密码错误");
         }
     }
 }

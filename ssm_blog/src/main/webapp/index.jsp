@@ -15,6 +15,7 @@
 </head>
 <body>
     hello
+    <h1>${sessionScope.isLogin.username}</h1>
 <a href="${APP_PATH}/users">getUsers</a>
 <a href="${APP_PATH}/register.jsp">register</a>
 <a href="${APP_PATH}/login.jsp">login</a>

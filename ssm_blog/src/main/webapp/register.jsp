@@ -121,7 +121,7 @@
         }else {
             result.code = 100;
             result.msg = "";
-            show_validate_msg("#empName_add_input",result);
+            show_validate_msg("#usernameInput",result);
         }
 
         var password = $("#passwordInput").val();
@@ -169,41 +169,41 @@
      * 检验正确后 表单提交
      */
     $("#registerBtn").click(function () {
-        var resultCode;
-        if(!validate_register_form()){
-            return false;
-        }
-        //这部分代码与之前相同可以抽取成一个函数
-        var username = this.value;
-        $.ajax({
-            url:"${APP_PATH}/userCheck",
-            data:"username="+username,
-            type:"POST",
-            success:function (result) {
-                show_validate_msg("#usernameInput",result);
-                //将返回码递交给外部
-                resultCode = result.code;
+            var resultCode;
+            if(!validate_register_form()){
+                return false;
             }
-        });
-
-        if (resultCode==200){
-            return false;
-        }
-        //先发送ajax异步请求 根据结果进行跳转
-        $.ajax({
-            url:"${APP_PATH}/register",
-            type:"POST",
-            data:$("#container form").serialize(),
-            success:function (result) {
-                console.log(result);
-                resultCode = result.code;
-                if(result.code==200){
-                    alert(result.msg);
-                }else {
-                    window.location.href="${APP_PATH}/login.jsp";
+            //这部分代码与之前相同可以抽取成一个函数
+            var username = this.value;
+            $.ajax({
+                url:"${APP_PATH}/userCheck",
+                data:"username="+username,
+                type:"POST",
+                success:function (result) {
+                    show_validate_msg("#usernameInput",result);
+                    //将返回码递交给外部
+                    resultCode = result.code;
                 }
+            });
+
+            if (resultCode==200){
+                return false;
             }
-        });
+            //先发送ajax异步请求 根据结果进行跳转
+            $.ajax({
+                url:"${APP_PATH}/register",
+                type:"POST",
+                data:$("#container form").serialize(),
+                success:function (result) {
+                    console.log(result);
+                    resultCode = result.code;
+                    if(result.code==200){
+                        alert(result.msg);
+                    }else {
+                        window.location.href="${APP_PATH}/login.jsp";
+                    }
+                }
+            });
 
 
     })
